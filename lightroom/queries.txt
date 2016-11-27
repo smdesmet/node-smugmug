@@ -1,0 +1,18 @@
+sqlite3 Catalog.lrcat
+
+.header on
+.mode column
+# .mode line
+
+SELECT COUNT(*) FROM sqlite_master WHERE type='table';
+SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;
+SELECT * FROM sqlite_master WHERE type='table' LIMIT 10;
+
+SELECT id_local, absolutePath FROM AgLibraryRootFolder;
+
+SELECT COUNT(*) FROM AgLibraryFolder;
+SELECT id_local, pathFromRoot, rootFolder FROM AgLibraryFolder LIMIT 10;
+
+SELECT COUNT(*) FROM AgLibraryFile;
+SELECT id_local, baseName, extension, folder FROM AgLibraryFile LIMIT 10;
+SELECT folder, COUNT(folder) FROM AgLibraryFile GROUP BY folder;

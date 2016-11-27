@@ -1,0 +1,781 @@
+sqlite> SELECT * FROM sqlite_master WHERE type='table';
+table|Adobe_variablesTable|Adobe_variablesTable|2|CREATE TABLE Adobe_variablesTable (
+	    id_local INTEGER PRIMARY KEY,
+	    id_global UNIQUE NOT NULL,
+	    name,
+	    type,
+	    value NOT NULL DEFAULT ''
+	)
+table|Adobe_variables|Adobe_variables|4|CREATE TABLE Adobe_variables (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    name,
+    value
+)
+table|AgFolderContent|AgFolderContent|7|CREATE TABLE AgFolderContent (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    containingFolder INTEGER NOT NULL DEFAULT 0,
+    content,
+    name,
+    owningModule
+)
+table|Adobe_AdditionalMetadata|Adobe_AdditionalMetadata|11|CREATE TABLE Adobe_AdditionalMetadata (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    additionalInfoSet INTEGER NOT NULL DEFAULT 0,
+    embeddedXmp INTEGER NOT NULL DEFAULT 0,
+    externalXmpIsDirty INTEGER NOT NULL DEFAULT 0,
+    image INTEGER,
+    incrementalWhiteBalance INTEGER NOT NULL DEFAULT 0,
+    internalXmpDigest,
+    isRawFile INTEGER NOT NULL DEFAULT 0,
+    lastSynchronizedHash,
+    lastSynchronizedTimestamp NOT NULL DEFAULT -63113817600,
+    metadataPresetID,
+    metadataVersion,
+    monochrome INTEGER NOT NULL DEFAULT 0,
+    xmp NOT NULL DEFAULT ''
+)
+table|AgMetadataSearchIndex|AgMetadataSearchIndex|14|CREATE TABLE AgMetadataSearchIndex (
+    id_local INTEGER PRIMARY KEY,
+    exifSearchIndex NOT NULL DEFAULT '',
+    image INTEGER,
+    iptcSearchIndex NOT NULL DEFAULT '',
+    otherSearchIndex NOT NULL DEFAULT '',
+    searchIndex NOT NULL DEFAULT ''
+)
+table|Adobe_imageProperties|Adobe_imageProperties|16|CREATE TABLE Adobe_imageProperties (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    image INTEGER,
+    propertiesString
+)
+table|Adobe_libraryImageDevelopSnapshot|Adobe_libraryImageDevelopSnapshot|19|CREATE TABLE Adobe_libraryImageDevelopSnapshot (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    digest,
+    hasDevelopAdjustments,
+    image INTEGER,
+    locked,
+    name,
+    snapshotID,
+    text
+)
+table|Adobe_libraryImageDevelopHistoryStep|Adobe_libraryImageDevelopHistoryStep|22|CREATE TABLE Adobe_libraryImageDevelopHistoryStep (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    dateCreated,
+    digest,
+    hasDevelopAdjustments,
+    image INTEGER,
+    name,
+    relValueString,
+    text,
+    valueString
+)
+table|Adobe_imageProofSettings|Adobe_imageProofSettings|27|CREATE TABLE Adobe_imageProofSettings (
+    id_local INTEGER PRIMARY KEY,
+    colorProfile,
+    image INTEGER,
+    renderingIntent
+)
+table|AgLibraryKeywordImage|AgLibraryKeywordImage|29|CREATE TABLE AgLibraryKeywordImage (
+    id_local INTEGER PRIMARY KEY,
+    image INTEGER NOT NULL DEFAULT 0,
+    tag INTEGER NOT NULL DEFAULT 0
+)
+table|Adobe_images|Adobe_images|32|CREATE TABLE Adobe_images (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    aspectRatioCache NOT NULL DEFAULT -1,
+    bitDepth NOT NULL DEFAULT 0,
+    captureTime,
+    colorChannels NOT NULL DEFAULT 0,
+    colorLabels NOT NULL DEFAULT '',
+    colorMode NOT NULL DEFAULT -1,
+    copyCreationTime NOT NULL DEFAULT -63113817600,
+    copyName,
+    copyReason,
+    developSettingsIDCache,
+    fileFormat NOT NULL DEFAULT 'unset',
+    fileHeight,
+    fileWidth,
+    hasMissingSidecars INTEGER,
+    masterImage INTEGER,
+    orientation,
+    originalCaptureTime,
+    originalRootEntity INTEGER,
+    panningDistanceH,
+    panningDistanceV,
+    pick NOT NULL DEFAULT 0,
+    positionInFolder NOT NULL DEFAULT 'z',
+    propertiesCache,
+    pyramidIDCache,
+    rating,
+    rootFile INTEGER NOT NULL DEFAULT 0,
+    sidecarStatus,
+    touchCount NOT NULL DEFAULT 0,
+    touchTime NOT NULL DEFAULT 0
+)
+table|AgLibraryKeyword|AgLibraryKeyword|39|CREATE TABLE AgLibraryKeyword (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    dateCreated NOT NULL DEFAULT '',
+    genealogy NOT NULL DEFAULT '',
+    imageCountCache DEFAULT -1,
+    includeOnExport INTEGER NOT NULL DEFAULT 1,
+    includeParents INTEGER NOT NULL DEFAULT 1,
+    includeSynonyms INTEGER NOT NULL DEFAULT 1,
+    keywordType,
+    lastApplied,
+    lc_name,
+    name,
+    parent INTEGER
+)
+table|AgLibraryKeywordSynonym|AgLibraryKeywordSynonym|43|CREATE TABLE AgLibraryKeywordSynonym (
+    id_local INTEGER PRIMARY KEY,
+    keyword INTEGER NOT NULL DEFAULT 0,
+    lc_name,
+    name
+)
+table|AgLibraryCollection|AgLibraryCollection|47|CREATE TABLE AgLibraryCollection (
+    id_local INTEGER PRIMARY KEY,
+    creationId NOT NULL DEFAULT '',
+    genealogy NOT NULL DEFAULT '',
+    imageCount,
+    name NOT NULL DEFAULT '',
+    parent INTEGER,
+    systemOnly NOT NULL DEFAULT ''
+)
+table|AgLibraryCollectionImage|AgLibraryCollectionImage|50|CREATE TABLE AgLibraryCollectionImage (
+    id_local INTEGER PRIMARY KEY,
+    collection INTEGER NOT NULL DEFAULT 0,
+    image INTEGER NOT NULL DEFAULT 0,
+    pick NOT NULL DEFAULT 0,
+    positionInCollection
+)
+table|AgLibraryCollectionContent|AgLibraryCollectionContent|53|CREATE TABLE AgLibraryCollectionContent (
+    id_local INTEGER PRIMARY KEY,
+    collection INTEGER NOT NULL DEFAULT 0,
+    content,
+    owningModule
+)
+table|AgLibraryCollectionStack|AgLibraryCollectionStack|56|CREATE TABLE AgLibraryCollectionStack (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    collapsed INTEGER NOT NULL DEFAULT 0,
+    collection INTEGER NOT NULL DEFAULT 0,
+    text NOT NULL DEFAULT ''
+)
+table|AgLibraryCollectionStackImage|AgLibraryCollectionStackImage|59|CREATE TABLE AgLibraryCollectionStackImage (
+    id_local INTEGER PRIMARY KEY,
+    collapsed INTEGER NOT NULL DEFAULT 0,
+    collection INTEGER NOT NULL DEFAULT 0,
+    image INTEGER NOT NULL DEFAULT 0,
+    position NOT NULL DEFAULT '',
+    stack INTEGER NOT NULL DEFAULT 0
+)
+table|AgOutputImageAsset|AgOutputImageAsset|67|CREATE TABLE AgOutputImageAsset (
+    id_local INTEGER PRIMARY KEY,
+    assetId NOT NULL DEFAULT '',
+    collection INTEGER NOT NULL DEFAULT 0,
+    image INTEGER NOT NULL DEFAULT 0,
+    moduleId NOT NULL DEFAULT ''
+)
+table|AgLibraryFolderStack|AgLibraryFolderStack|72|CREATE TABLE AgLibraryFolderStack (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    collapsed INTEGER NOT NULL DEFAULT 0,
+    text NOT NULL DEFAULT ''
+)
+table|AgLibraryFolderStackImage|AgLibraryFolderStackImage|75|CREATE TABLE AgLibraryFolderStackImage (
+    id_local INTEGER PRIMARY KEY,
+    collapsed INTEGER NOT NULL DEFAULT 0,
+    image INTEGER NOT NULL DEFAULT 0,
+    position NOT NULL DEFAULT '',
+    stack INTEGER NOT NULL DEFAULT 0
+)
+table|AgLibraryPublishedCollection|AgLibraryPublishedCollection|81|CREATE TABLE AgLibraryPublishedCollection (
+    id_local INTEGER PRIMARY KEY,
+    creationId NOT NULL DEFAULT '',
+    genealogy NOT NULL DEFAULT '',
+    imageCount,
+    isDefaultCollection,
+    name NOT NULL DEFAULT '',
+    parent INTEGER,
+    publishedUrl,
+    remoteCollectionId,
+    systemOnly NOT NULL DEFAULT ''
+)
+table|AgLibraryPublishedCollectionImage|AgLibraryPublishedCollectionImage|84|CREATE TABLE AgLibraryPublishedCollectionImage (
+    id_local INTEGER PRIMARY KEY,
+    collection INTEGER NOT NULL DEFAULT 0,
+    image INTEGER NOT NULL DEFAULT 0,
+    pick NOT NULL DEFAULT 0,
+    positionInCollection
+)
+table|AgLibraryPublishedCollectionContent|AgLibraryPublishedCollectionContent|87|CREATE TABLE AgLibraryPublishedCollectionContent (
+    id_local INTEGER PRIMARY KEY,
+    collection INTEGER NOT NULL DEFAULT 0,
+    content,
+    owningModule
+)
+table|AgLibraryIPTC|AgLibraryIPTC|90|CREATE TABLE AgLibraryIPTC (
+    id_local INTEGER PRIMARY KEY,
+    caption,
+    copyright,
+    image INTEGER NOT NULL DEFAULT 0
+)
+table|AgLibraryImport|AgLibraryImport|92|CREATE TABLE AgLibraryImport (
+    id_local INTEGER PRIMARY KEY,
+    imageCount,
+    importDate NOT NULL DEFAULT '',
+    name
+)
+table|AgLibraryImportImage|AgLibraryImportImage|93|CREATE TABLE AgLibraryImportImage (
+    id_local INTEGER PRIMARY KEY,
+    image INTEGER NOT NULL DEFAULT 0,
+    import INTEGER NOT NULL DEFAULT 0
+)
+table|AgSpecialSourceContent|AgSpecialSourceContent|97|CREATE TABLE AgSpecialSourceContent (
+    id_local INTEGER PRIMARY KEY,
+    content,
+    owningModule,
+    source NOT NULL DEFAULT ''
+)
+table|AgLibraryRootFolder|AgLibraryRootFolder|100|CREATE TABLE AgLibraryRootFolder (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    absolutePath UNIQUE NOT NULL DEFAULT '',
+    name NOT NULL DEFAULT '',
+    relativePathFromCatalog
+)
+table|AgLibraryFolder|AgLibraryFolder|103|CREATE TABLE AgLibraryFolder (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    pathFromRoot NOT NULL DEFAULT '',
+    rootFolder INTEGER NOT NULL DEFAULT 0
+)
+table|AgLibraryFile|AgLibraryFile|106|CREATE TABLE AgLibraryFile (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    baseName NOT NULL DEFAULT '',
+    errorMessage,
+    errorTime,
+    extension NOT NULL DEFAULT '',
+    externalModTime,
+    folder INTEGER NOT NULL DEFAULT 0,
+    idx_filename NOT NULL DEFAULT '',
+    importHash,
+    lc_idx_filename NOT NULL DEFAULT '',
+    lc_idx_filenameExtension NOT NULL DEFAULT '',
+    md5,
+    modTime,
+    originalFilename NOT NULL DEFAULT '',
+    sidecarExtensions
+)
+table|AgLibraryKeywordPopularity|AgLibraryKeywordPopularity|111|CREATE TABLE AgLibraryKeywordPopularity (
+    id_local INTEGER PRIMARY KEY,
+    occurrences NOT NULL DEFAULT 0,
+    popularity NOT NULL DEFAULT 0,
+    tag UNIQUE NOT NULL DEFAULT ''
+)
+table|AgLibraryKeywordCooccurrence|AgLibraryKeywordCooccurrence|114|CREATE TABLE AgLibraryKeywordCooccurrence (
+    id_local INTEGER PRIMARY KEY,
+    tag1 NOT NULL DEFAULT '',
+    tag2 NOT NULL DEFAULT '',
+    value NOT NULL DEFAULT 0
+)
+table|AgPhotoComment|AgPhotoComment|119|CREATE TABLE AgPhotoComment (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    comment,
+    commentRealname,
+    commentUsername,
+    dateCreated,
+    photo INTEGER NOT NULL DEFAULT 0,
+    remoteId NOT NULL DEFAULT '',
+    remotePhoto INTEGER,
+    url
+)
+table|AgPhotoProperty|AgPhotoProperty|124|CREATE TABLE AgPhotoProperty (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    dataType,
+    internalValue,
+    photo INTEGER NOT NULL DEFAULT 0,
+    propertySpec INTEGER NOT NULL DEFAULT 0
+)
+table|AgPhotoPropertyArrayElement|AgPhotoPropertyArrayElement|128|CREATE TABLE AgPhotoPropertyArrayElement (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    arrayIndex NOT NULL DEFAULT '',
+    dataType,
+    internalValue,
+    photo INTEGER NOT NULL DEFAULT 0,
+    propertySpec INTEGER NOT NULL DEFAULT 0
+)
+table|AgSearchablePhotoProperty|AgSearchablePhotoProperty|132|CREATE TABLE AgSearchablePhotoProperty (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    dataType,
+    internalValue,
+    lc_idx_internalValue,
+    photo INTEGER NOT NULL DEFAULT 0,
+    propertySpec INTEGER NOT NULL DEFAULT 0
+)
+table|AgSearchablePhotoPropertyArrayElement|AgSearchablePhotoPropertyArrayElement|138|CREATE TABLE AgSearchablePhotoPropertyArrayElement (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    arrayIndex NOT NULL DEFAULT '',
+    dataType,
+    internalValue,
+    lc_idx_internalValue,
+    photo INTEGER NOT NULL DEFAULT 0,
+    propertySpec INTEGER NOT NULL DEFAULT 0
+)
+table|AgPhotoPropertySpec|AgPhotoPropertySpec|145|CREATE TABLE AgPhotoPropertySpec (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    flattenedAttributes,
+    key NOT NULL DEFAULT '',
+    pluginVersion NOT NULL DEFAULT '',
+    sourcePlugin NOT NULL DEFAULT '',
+    userVisibleName
+)
+table|AgRemotePhoto|AgRemotePhoto|148|CREATE TABLE AgRemotePhoto (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    collection INTEGER NOT NULL DEFAULT 0,
+    commentCount,
+    developSettingsDigest,
+    fileContentsHash,
+    fileModTimestamp,
+    metadataDigest,
+    mostRecentCommentTime,
+    orientation,
+    photo INTEGER NOT NULL DEFAULT 0,
+    photoNeedsUpdating DEFAULT 2,
+    publishCount,
+    remoteId,
+    serviceAggregateRating,
+    url
+)
+table|AgVideoInfo|AgVideoInfo|154|CREATE TABLE AgVideoInfo (
+    id_local INTEGER PRIMARY KEY,
+    duration,
+    frame_rate,
+    has_audio INTEGER NOT NULL DEFAULT 1,
+    has_video INTEGER NOT NULL DEFAULT 1,
+    image INTEGER NOT NULL DEFAULT 0,
+    poster_frame NOT NULL DEFAULT '0000000000000000/0000000000000001',
+    poster_frame_set_by_user INTEGER NOT NULL DEFAULT 0,
+    trim_end NOT NULL DEFAULT '0000000000000000/0000000000000001',
+    trim_start NOT NULL DEFAULT '0000000000000000/0000000000000001'
+)
+table|AgLibraryFace|AgLibraryFace|157|CREATE TABLE AgLibraryFace (
+    id_local INTEGER PRIMARY KEY,
+    bl_x,
+    bl_y,
+    br_x,
+    br_y,
+    cluster INTEGER,
+    compatibleVersion,
+    ignored INTEGER,
+    image INTEGER NOT NULL DEFAULT 0,
+    imageOrientation NOT NULL DEFAULT '',
+    orientation,
+    origination NOT NULL DEFAULT 0,
+    propertiesCache,
+    regionType NOT NULL DEFAULT 0,
+    skipSuggestion INTEGER,
+    tl_x NOT NULL DEFAULT '',
+    tl_y NOT NULL DEFAULT '',
+    touchCount NOT NULL DEFAULT 0,
+    touchTime NOT NULL DEFAULT -63113817600,
+    tr_x,
+    tr_y,
+    version
+)
+table|Adobe_faceProperties|Adobe_faceProperties|160|CREATE TABLE Adobe_faceProperties (
+    id_local INTEGER PRIMARY KEY,
+    face INTEGER,
+    propertiesString
+)
+table|AgLibraryFaceData|AgLibraryFaceData|162|CREATE TABLE AgLibraryFaceData (
+    id_local INTEGER PRIMARY KEY,
+    data,
+    face INTEGER NOT NULL DEFAULT 0
+)
+table|AgLibraryFaceCluster|AgLibraryFaceCluster|164|CREATE TABLE AgLibraryFaceCluster (
+    id_local INTEGER PRIMARY KEY,
+    keyFace INTEGER
+)
+table|AgLibraryKeywordFace|AgLibraryKeywordFace|166|CREATE TABLE AgLibraryKeywordFace (
+    id_local INTEGER PRIMARY KEY,
+    face INTEGER NOT NULL DEFAULT 0,
+    keyFace INTEGER,
+    rankOrder,
+    tag INTEGER NOT NULL DEFAULT 0,
+    userPick INTEGER,
+    userReject INTEGER
+)
+table|Adobe_libraryImageFaceProcessHistory|Adobe_libraryImageFaceProcessHistory|169|CREATE TABLE Adobe_libraryImageFaceProcessHistory (
+    id_local INTEGER PRIMARY KEY,
+    image INTEGER NOT NULL DEFAULT 0,
+    lastFaceDetector,
+    lastFaceRecognizer,
+    lastImageIndexer,
+    lastImageOrientation,
+    lastTryStatus,
+    userTouched
+)
+table|AgLibraryImageSearchData|AgLibraryImageSearchData|171|CREATE TABLE AgLibraryImageSearchData (
+    id_local INTEGER PRIMARY KEY,
+    featInfo,
+    height,
+    idDesc,
+    idDescCh,
+    image INTEGER NOT NULL DEFAULT 0,
+    width
+)
+table|AgSourceColorProfileConstants|AgSourceColorProfileConstants|173|CREATE TABLE AgSourceColorProfileConstants (
+    id_local INTEGER PRIMARY KEY,
+    image INTEGER NOT NULL DEFAULT 0,
+    profileName NOT NULL DEFAULT 'Untagged'
+)
+table|AgDNGProxyInfo|AgDNGProxyInfo|177|CREATE TABLE AgDNGProxyInfo (
+    id_local INTEGER PRIMARY KEY,
+    fileUUID NOT NULL DEFAULT '',
+    status NOT NULL DEFAULT 'U',
+    statusDateTime NOT NULL DEFAULT 0
+)
+table|AgLibraryOzFeedbackInfo|AgLibraryOzFeedbackInfo|180|CREATE TABLE AgLibraryOzFeedbackInfo (
+    id_local INTEGER PRIMARY KEY,
+    image NOT NULL DEFAULT '',
+    lastFeedbackTime,
+    lastReadTime,
+    newCommentCount NOT NULL DEFAULT 0,
+    newFavoriteCount NOT NULL DEFAULT 0,
+    ozAssetId NOT NULL DEFAULT '',
+    ozCatalogId NOT NULL DEFAULT '',
+    ozSpaceId NOT NULL DEFAULT ''
+)
+table|Adobe_imageDevelopBeforeSettings|Adobe_imageDevelopBeforeSettings|183|CREATE TABLE Adobe_imageDevelopBeforeSettings (
+    id_local INTEGER PRIMARY KEY,
+    beforeDigest,
+    beforeHasDevelopAdjustments,
+    beforePresetID,
+    beforeText,
+    developSettings INTEGER
+)
+table|Adobe_imageDevelopSettings|Adobe_imageDevelopSettings|185|CREATE TABLE Adobe_imageDevelopSettings (
+    id_local INTEGER PRIMARY KEY,
+    allowFastRender INTEGER,
+    beforeSettingsIDCache,
+    croppedHeight,
+    croppedWidth,
+    digest,
+    fileHeight,
+    fileWidth,
+    grayscale INTEGER,
+    hasDevelopAdjustments INTEGER,
+    hasDevelopAdjustmentsEx,
+    historySettingsID,
+    image INTEGER,
+    processVersion,
+    settingsID,
+    snapshotID,
+    text,
+    validatedForVersion,
+    whiteBalance
+)
+table|Adobe_namedIdentityPlate|Adobe_namedIdentityPlate|189|CREATE TABLE Adobe_namedIdentityPlate (
+    id_local INTEGER PRIMARY KEY,
+    id_global UNIQUE NOT NULL,
+    description,
+    identityPlate,
+    identityPlateHash,
+    moduleFont,
+    moduleSelectedTextColor,
+    moduleTextColor
+)
+table|AgMRULists|AgMRULists|193|CREATE TABLE AgMRULists (
+    id_local INTEGER PRIMARY KEY,
+    listID NOT NULL DEFAULT '',
+    timestamp NOT NULL DEFAULT 0,
+    value NOT NULL DEFAULT ''
+)
+table|AgHarvestedExifMetadata|AgHarvestedExifMetadata|195|CREATE TABLE AgHarvestedExifMetadata (
+    id_local INTEGER PRIMARY KEY,
+    image INTEGER,
+    aperture,
+    cameraModelRef INTEGER,
+    cameraSNRef INTEGER,
+    dateDay,
+    dateMonth,
+    dateYear,
+    flashFired INTEGER,
+    focalLength,
+    gpsLatitude,
+    gpsLongitude,
+    gpsSequence NOT NULL DEFAULT 0,
+    hasGPS INTEGER,
+    isoSpeedRating,
+    lensRef INTEGER,
+    shutterSpeed
+)
+table|AgHarvestedIptcMetadata|AgHarvestedIptcMetadata|208|CREATE TABLE AgHarvestedIptcMetadata (
+    id_local INTEGER PRIMARY KEY,
+    image INTEGER,
+    cityRef INTEGER,
+    copyrightState INTEGER,
+    countryRef INTEGER,
+    creatorRef INTEGER,
+    isoCountryCodeRef INTEGER,
+    jobIdentifierRef INTEGER,
+    locationDataOrigination NOT NULL DEFAULT 'unset',
+    locationGPSSequence NOT NULL DEFAULT -1,
+    locationRef INTEGER,
+    stateRef INTEGER
+)
+table|AgHarvestedDNGMetadata|AgHarvestedDNGMetadata|218|CREATE TABLE AgHarvestedDNGMetadata (
+    id_local INTEGER PRIMARY KEY,
+    image INTEGER,
+    hasFastLoadData INTEGER,
+    hasLossyCompression INTEGER,
+    isDNG INTEGER,
+    isHDR INTEGER,
+    isPano INTEGER,
+    isReducedResolution INTEGER
+)
+table|AgInternedIptcCreator|AgInternedIptcCreator|227|CREATE TABLE AgInternedIptcCreator (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedIptcCountry|AgInternedIptcCountry|230|CREATE TABLE AgInternedIptcCountry (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedIptcLocation|AgInternedIptcLocation|233|CREATE TABLE AgInternedIptcLocation (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedIptcState|AgInternedIptcState|236|CREATE TABLE AgInternedIptcState (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedExifCameraModel|AgInternedExifCameraModel|239|CREATE TABLE AgInternedExifCameraModel (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedExifCameraSN|AgInternedExifCameraSN|242|CREATE TABLE AgInternedExifCameraSN (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedIptcJobIdentifier|AgInternedIptcJobIdentifier|245|CREATE TABLE AgInternedIptcJobIdentifier (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedIptcIsoCountryCode|AgInternedIptcIsoCountryCode|249|CREATE TABLE AgInternedIptcIsoCountryCode (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedIptcCity|AgInternedIptcCity|252|CREATE TABLE AgInternedIptcCity (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgInternedExifLens|AgInternedExifLens|255|CREATE TABLE AgInternedExifLens (
+    id_local INTEGER PRIMARY KEY,
+    searchIndex,
+    value
+)
+table|AgHarvestedMetadataWorklist|AgHarvestedMetadataWorklist|258|CREATE TABLE AgHarvestedMetadataWorklist (
+    id_local INTEGER PRIMARY KEY,
+    taskID UNIQUE NOT NULL DEFAULT '',
+    taskStatus NOT NULL DEFAULT 'pending',
+    whenPosted NOT NULL DEFAULT ''
+)
+table|AgLibraryImageXMPUpdater|AgLibraryImageXMPUpdater|262|CREATE TABLE AgLibraryImageXMPUpdater (
+    id_local INTEGER PRIMARY KEY,
+    taskID UNIQUE NOT NULL DEFAULT '',
+    taskStatus NOT NULL DEFAULT 'pending',
+    whenPosted NOT NULL DEFAULT ''
+)
+table|AgPublishListenerWorklist|AgPublishListenerWorklist|266|CREATE TABLE AgPublishListenerWorklist (
+    id_local INTEGER PRIMARY KEY,
+    taskID UNIQUE NOT NULL DEFAULT '',
+    taskStatus NOT NULL DEFAULT 'pending',
+    whenPosted NOT NULL DEFAULT ''
+)
+table|AgDNGProxyInfoUpdater|AgDNGProxyInfoUpdater|271|CREATE TABLE AgDNGProxyInfoUpdater (
+    id_local INTEGER PRIMARY KEY,
+    taskID UNIQUE NOT NULL DEFAULT '',
+    taskStatus NOT NULL DEFAULT 'pending',
+    whenPosted NOT NULL DEFAULT ''
+)
+table|AgTempImages|AgTempImages|275|CREATE TABLE AgTempImages ( image INTEGER PRIMARY KEY )
+table|AgLibraryUpdatedImages|AgLibraryUpdatedImages|276|CREATE TABLE AgLibraryUpdatedImages ( image INTEGER PRIMARY KEY )
+table|AgLastCatalogExport|AgLastCatalogExport|277|CREATE TABLE AgLastCatalogExport ( image INTEGER PRIMARY KEY )
+table|AgLibraryCollectionStackData|AgLibraryCollectionStackData|278|CREATE TABLE AgLibraryCollectionStackData(
+    stack INTEGER,
+    collection INTEGER NOT NULL DEFAULT 0,
+    stackCount INTEGER NOT NULL DEFAULT 0,
+    stackParent INTEGER
+)
+table|AgLibraryFolderStackData|AgLibraryFolderStackData|280|CREATE TABLE AgLibraryFolderStackData (
+    stack INTEGER,
+    stackCount INTEGER NOT NULL DEFAULT 0,
+    stackParent INTEGER
+)
+table|LrMobileSyncChangeCounter|LrMobileSyncChangeCounter|282|CREATE TABLE LrMobileSyncChangeCounter(
+	id PRIMARY KEY,
+	changeCounter NOT NULL
+)
+table|AgLibraryCollectionTrackedAssets|AgLibraryCollectionTrackedAssets|284|CREATE TABLE AgLibraryCollectionTrackedAssets (
+	collection NOT NULL,
+	ozCatalogId DEFAULT "current"
+)
+table|AgLibraryImageChangeCounter|AgLibraryImageChangeCounter|286|CREATE TABLE AgLibraryImageChangeCounter(
+	image PRIMARY KEY,
+	changeCounter DEFAULT 0,
+	changedAtTime DEFAULT '',
+	localTimeOffsetSecs DEFAULT 0
+)
+table|AgLibraryImageOzAssetIds|AgLibraryImageOzAssetIds|288|CREATE TABLE AgLibraryImageOzAssetIds(
+	image NOT NULL,
+	ozCatalogId NOT NULL,
+	ozAssetId DEFAULT "pending",
+	ownedByCatalog DEFAULT 'Y'
+)
+table|AgDeletedOzAssetIds|AgDeletedOzAssetIds|289|CREATE TABLE AgDeletedOzAssetIds(
+	ozCatalogId NOT NULL,
+	ozAssetId NOT NULL,
+	changeCounter DEFAULT 0
+)
+table|AgLibraryImageSyncedAssetData|AgLibraryImageSyncedAssetData|290|CREATE TABLE AgLibraryImageSyncedAssetData (
+	image NOT NULL,
+	payloadKey NOT NULL,
+	payloadData NOT NULL
+)
+table|AgPendingOzAssetBinaryDownloads|AgPendingOzAssetBinaryDownloads|291|CREATE TABLE AgPendingOzAssetBinaryDownloads(
+	ozAssetId NOT NULL,
+	ozCatalogId NOT NULL,
+	whenQueued NOT NULL,
+	path NOT NULL,
+	state DEFAULT "master"
+)
+table|AgPendingOzAssets|AgPendingOzAssets|292|CREATE TABLE AgPendingOzAssets(
+	ozAssetId NOT NULL,
+	ozCatalogId NOT NULL,
+	state DEFAULT "needs_binary",
+	path NOT NULL,
+	payload NOT NULL
+)
+table|AgLibraryCollectionChangeCounter|AgLibraryCollectionChangeCounter|293|CREATE TABLE AgLibraryCollectionChangeCounter(
+	collection PRIMARY KEY,
+	changeCounter DEFAULT 0
+)
+table|AgLibraryCollectionOzAlbumIds|AgLibraryCollectionOzAlbumIds|295|CREATE TABLE AgLibraryCollectionOzAlbumIds(
+	collection NOT NULL,
+	ozCatalogId NOT NULL,
+	ozAlbumId DEFAULT "pending"
+)
+table|AgDeletedOzAlbumIds|AgDeletedOzAlbumIds|296|CREATE TABLE AgDeletedOzAlbumIds(
+	ozCatalogId NOT NULL,
+	ozAlbumId NOT NULL,
+	changeCounter DEFAULT 0
+)
+table|AgLibraryCollectionSyncedAlbumData|AgLibraryCollectionSyncedAlbumData|297|CREATE TABLE AgLibraryCollectionSyncedAlbumData(
+	collection NOT NULL,
+	payloadKey NOT NULL,
+	payloadData NOT NULL
+)
+table|AgLibraryCollectionCoverImage|AgLibraryCollectionCoverImage|298|CREATE TABLE AgLibraryCollectionCoverImage(
+	collection PRIMARY KEY,
+	collectionImage NOT NULL
+)
+table|AgLibraryCollectionImageChangeCounter|AgLibraryCollectionImageChangeCounter|300|CREATE TABLE AgLibraryCollectionImageChangeCounter(
+	collectionImage PRIMARY KEY,
+	collection NOT NULL,
+	image NOT NULL,
+	changeCounter DEFAULT 0
+)
+table|AgLibraryCollectionImageOzAlbumAssetIds|AgLibraryCollectionImageOzAlbumAssetIds|302|CREATE TABLE AgLibraryCollectionImageOzAlbumAssetIds(
+	collectionImage NOT NULL,
+	collection NOT NULL,
+	image NOT NULL,
+	ozCatalogId NOT NULL,
+	ozAlbumAssetId DEFAULT "pending"
+)
+table|AgLibraryCollectionImageOzSortOrder|AgLibraryCollectionImageOzSortOrder|304|CREATE TABLE AgLibraryCollectionImageOzSortOrder(
+	collectionImage  PRIMARY KEY,
+	collection NOT NULL,
+	positionInCollection NOT NULL,
+	ozSortOrder NOT NULL
+)
+table|AgDeletedOzAlbumAssetIds|AgDeletedOzAlbumAssetIds|306|CREATE TABLE AgDeletedOzAlbumAssetIds(
+	ozCatalogId NOT NULL,
+	ozAlbumAssetId NOT NULL,
+	changeCounter DEFAULT 0
+)
+table|AgPendingOzAlbumAssetIds|AgPendingOzAlbumAssetIds|307|CREATE TABLE AgPendingOzAlbumAssetIds(
+	ozCatalogId NOT NULL,
+	ozAlbumAssetId NOT NULL,
+	ozAssetId NOT NULL,
+	ozAlbumId NOT NULL,
+	ozSortOrder DEFAULT "",
+	ozIsCover DEFAULT 0
+)
+table|AgOzSpaceIds|AgOzSpaceIds|308|CREATE TABLE AgOzSpaceIds(
+	ozCatalogId NOT NULL,
+	ozSpaceId NOT NULL
+)
+table|AgDeletedOzSpaceIds|AgDeletedOzSpaceIds|309|CREATE TABLE AgDeletedOzSpaceIds(
+	ozCatalogId NOT NULL,
+	ozSpaceId NOT NULL,
+	changeCounter default 0
+)
+table|AgOzSpaceAlbumIds|AgOzSpaceAlbumIds|310|CREATE TABLE AgOzSpaceAlbumIds(
+	ozCatalogId NOT NULL,
+	ozAlbumId NOT NULL,
+	ozSpaceId NOT NULL,
+	ozSpaceAlbumId NOT NULL
+)
+table|AgLibraryOzCommentIds|AgLibraryOzCommentIds|311|CREATE TABLE AgLibraryOzCommentIds(
+	ozCatalogId NOT NULL,
+	ozSpaceId NOT NULL,
+	ozAssetId NOT NULL,
+	ozCommentId NOT NULL,
+	timestamp NOT NULL
+)
+table|AgLibraryOzFavoriteIds|AgLibraryOzFavoriteIds|312|CREATE TABLE AgLibraryOzFavoriteIds(
+	ozCatalogId NOT NULL,
+	ozSpaceId NOT NULL,
+	ozAssetId NOT NULL,
+	ozFavoriteId NOT NULL,
+	timestamp NOT NULL
+)
+table|AgLibraryFileAssetMetadata|AgLibraryFileAssetMetadata|313|CREATE TABLE AgLibraryFileAssetMetadata(
+	fileId PRIMARY KEY,
+	sha256 NOT NULL,
+	fileSize DEFAULT 0
+)
+table|AgUnsupportedOzAssets|AgUnsupportedOzAssets|539929|CREATE TABLE AgUnsupportedOzAssets(
+	id_local INTEGER PRIMARY KEY,
+	ozAssetId NOT NULL,
+	ozCatalogId NOT NULL,
+	path NOT NULL,
+	type NOT NULL,
+	payload NOT NULL
+)
