@@ -20,7 +20,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "axios": "^0.15.2",
+    "axios": "^0.15.3",
     "bluebird": "^3.4.6",
     "fs-extra-promise": "^0.4.1",
     "hashids": "^1.1.1",
@@ -32,7 +32,7 @@
     "@types/bluebird": "^3.0.36",
     "@types/fs-extra-promise": "0.0.30",
     "@types/hashids": "^1.0.28",
-    "@types/lodash": "^4.14.40",
+    "@types/lodash": "^4.14.41",
     "@types/node": "^6.0.51",
     "json-loader": "^0.5.4",
     "ts-loader": "^1.2.2",
