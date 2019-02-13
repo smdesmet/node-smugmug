@@ -48,9 +48,14 @@ export class Album extends Model {
     Object.assign(this, obj);
   }
 
-  async request(method: string, data?: {}): Promise<Response | AlbumResponse> {
+  async request(method: string, data?: {}): Promise<AlbumResponse> {
     const req = new AlbumRequest(this._client, { albumId: this.AlbumKey });
     return req.request(method, data);
+  }
+
+  async drequest(): Promise<Response> {
+    const req = new AlbumRequest(this._client, { albumId: this.AlbumKey });
+    return req.drequest();
   }
 
   async options(data: {}): Promise<AlbumResponse> {
@@ -92,13 +97,17 @@ export class AlbumRequest extends Request {
     super(client);
   }
 
-  async request(method: string, data?: {}): Promise<Response | AlbumResponse> {
+  async request(method: string, data?: {}): Promise<AlbumResponse> {
+    if(method=='DELETE') throw new Error("Delete should be drequest");
     const { albumId } = this._options;
     const res = await this._client.request(method, `/album/${albumId}`, data);
-    if (method.toUpperCase() === 'DELETE') {
-      return new Response(this._client, res);
-    }
     return new AlbumResponse(this._client, res);
+  }
+
+  async drequest(): Promise<Response> {
+    const { albumId } = this._options;
+    const res = await this._client.request("DELETE", `/album/${albumId}`);
+      return new Response(this._client, res);
   }
 
   async options(data: {}): Promise<AlbumResponse> {
@@ -117,7 +126,7 @@ export class AlbumRequest extends Request {
   }
 
   async delete(): Promise<Response> {
-    const res: Promise<Response> = this.request('DELETE');
+    const res: Promise<Response> = this.drequest();
     return res;
   }
 }

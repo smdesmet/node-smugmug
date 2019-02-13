@@ -66,9 +66,14 @@ export class Node extends Model {
     Object.assign(this, obj);
   }
 
-  async request(method: string, data?: {}): Promise<Response | NodeResponse> {
+  async request(method: string, data?: {}): Promise<NodeResponse> {
     const req = new NodeRequest(this._client, { nodeId: this.NodeID });
     return req.request(method, data);
+  }
+
+  async drequest(): Promise<Response> {
+    const req = new NodeRequest(this._client, { nodeId: this.NodeID });
+    return req.drequest();
   }
 
   async options(data: {}): Promise<NodeResponse> {
@@ -87,7 +92,7 @@ export class Node extends Model {
   }
 
   async delete(): Promise<Response> {
-    const res: Promise<Response> = this.request('DELETE');
+    const res: Promise<Response> = this.drequest();
     return res;
   }
 
@@ -164,8 +169,9 @@ export class NodeRequest extends Request {
     super(client);
   }
 
-  async request(method: string, data?: {}): Promise<Response | NodeResponse> {
+  async request(method: string, data?: {}): Promise<NodeResponse> {
     let nodeId;
+    if(method=='DELETE') throw new Error("Delete not supported by this function");
     if ((<NodeRequestOptionsWithNodeId> this._options).nodeId) {
       nodeId = (<NodeRequestOptionsWithNodeId> this._options).nodeId;
     } else {
@@ -173,10 +179,19 @@ export class NodeRequest extends Request {
       nodeId = user.Uris.Node.Uri.split('/').reverse()[0];
     }
     const res = await this._client.request(method, `/node/${nodeId}`, data);
-    if (method.toUpperCase() === 'DELETE') {
-      return new Response(this._client, res);
-    }
     return new NodeResponse(this._client, res);
+  }
+
+  async drequest(): Promise<Response> {
+    let nodeId;
+    if ((<NodeRequestOptionsWithNodeId> this._options).nodeId) {
+      nodeId = (<NodeRequestOptionsWithNodeId> this._options).nodeId;
+    } else {
+      const user = await (<NodeRequestOptionsWithUser> this._options).getUser();
+      nodeId = user.Uris.Node.Uri.split('/').reverse()[0];
+    }
+    const res = await this._client.request("DELETE", `/node/${nodeId}`);
+      return new Response(this._client, res);
   }
 
   async options(data: {}): Promise<NodeResponse> {
@@ -195,7 +210,7 @@ export class NodeRequest extends Request {
   }
 
   async delete(): Promise<Response> {
-    const res: Promise<Response> = this.request('DELETE');
+    const res: Promise<Response> = this.drequest();
     return res;
   }
 
@@ -273,16 +288,23 @@ export class NodesRequest extends Request {
     super(client);
   }
 
-  async request(method: string, data?: {}): Promise<NodeResponse | NodesResponse> {
+  async request(method: string, data?: {}): Promise<NodesResponse> {
+    if(method=="POST") throw new Error("Post request should use postrequest");
     const nodeId = await this._options.getNodeId();
     let res;
     if (this._options.childNodes) {
       res = await this._client.request(method, `/node/${nodeId}!children`, data);
     }
-    if (method.toUpperCase() === 'POST') {
-      return new NodeResponse(this._client, res);
-    }
     return new NodesResponse(this._client, res);
+  }
+
+  async postrequest(data?: {}): Promise<NodeResponse> {
+    const nodeId = await this._options.getNodeId();
+    let res;
+    if (this._options.childNodes) {
+      res = await this._client.request("POST", `/node/${nodeId}!children`, data);
+    }
+      return new NodeResponse(this._client, res);
   }
 
   async options(data: {}): Promise<NodesResponse> {
@@ -296,7 +318,7 @@ export class NodesRequest extends Request {
   }
 
   async post(data: {}): Promise<NodeResponse> {
-    const res: Promise<NodeResponse> = this.request('POST', data);
+    const res: Promise<NodeResponse> = this.postrequest( data);
     return res;
   }
 }
