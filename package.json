@@ -25,7 +25,7 @@
     "fs-extra-promise": "^0.4.1",
     "hashids": "^1.1.1",
     "lodash": "^4.17.2",
-    "oauth": "^0.9.14",
+    "oauth": "^0.9.14"
   },
   "devDependencies": {
     "@types/bluebird": "^3.0.36",
