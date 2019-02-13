@@ -5,5 +5,9 @@
     "noImplicitAny": true,
     "declaration": true,
     "declarationDir": "."
-  }
+  },
+     "include": [
+    "src/**/*.ts","config/**/*.ts","src/test/**/*.test.ts"
+],
+"exclude":[]
 }
